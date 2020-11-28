@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+void ownName(){
+
+    char cadena[1000];
+    printf("Digite una cadena de texto: \n");
+    fgets(cadena, 1000, stdin);
+    char delimitador[] = " ";
+    int c = 0, position = 2;
+    char *token = strtok(cadena, delimitador);
+    if(token != NULL){
+        while(token != NULL){
+            if (strlen(token)!=1) {
+                int length = strlen(token) - 1;
+                char sub[1000];
+                while (c < length) {
+                    sub[c] = token[position + c - 1];
+                    c++;
+                }
+                sub[c] = '\0';
+                c = 0;
+                printf("%c%s ", toupper(token[0]), sub);
+            }else{
+                printf("%s ", token);
+            }
+            token = strtok(NULL, delimitador);
+        }
+    }
+}
+
+int main() {
+
+    ownName();
+
+    return 0;
+}
