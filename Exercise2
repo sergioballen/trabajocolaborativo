@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <string.h>
+
+void counter(){
+    char cadena[1000];
+    printf("Digite una cadena de texto: \n");
+    fgets(cadena, 1000, stdin);
+    strtok(cadena,"\n");
+    char buscar[100];
+    printf("Digite una palabra a buscar de la frase anterior: \n");
+    scanf("%s",buscar);
+    char delimitador[] = " ";
+    char *token = strtok(cadena, delimitador);
+    int c = 0;
+    int count = 0;
+    if(token != NULL){
+        while(token != NULL){
+            if (strcmp(token, buscar) == 0){
+                count++;
+            }
+            token = strtok(NULL, delimitador);
+        }
+    }
+    printf("La palabra %s esta %d veces en la frase ", buscar, count);
+
+}
+
+int main() {
+
+    counter();
+
+    return 0;
+}
