@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void borrarIzquierdaODerecha(char cadena1[], char cadena2[], int opcion);
+int borrarDerecha(char caracter, char cadena[]);
+int borrarIzquierda(char caracter, char cadena[]);
+int main() {
+    fflush(stdin);
+
+    char cadena1[50];
+    char cadena2[50];
+    int opcion;
+
+    printf("Borrar caracteres de izquierda o derecha\n");
+    printf("Digite la cadena principal");
+    gets(cadena1);
+
+    printf("Digite la cadena secundaria");
+    gets(cadena2);
+
+    printf("\nBorrar por:\n1. Derecha\n2. Izquierda");
+    scanf("%d",&opcion);
+
+    borrarIzquierdaODerecha(cadena1, cadena2, opcion);
+
+    return 0;
+}
+
+void borrarIzquierdaODerecha(char cadena1[], char cadena2[], int opcion){
+
+    int tam1=strlen(cadena1);
+
+
+    strlwr(cadena1);
+    strlwr(cadena2);
+
+    if (opcion==1){
+        for (int i = tam1-1; i >=0 ; --i) {
+            if (borrarDerecha(cadena1[i],cadena2)!=0){
+                cadena1[i]="-";
+            } else{
+                printf("%s",cadena1);
+                exit(-1);
+            }
+        }
+    }else if (opcion==2){
+        for (int i = 0; i <tam1 ; ++i) {
+            if (borrarIzquierda(cadena1[i],cadena2)!=0){
+                cadena1[i]="-";
+            } else{
+                printf("%s",cadena1);
+                exit(-1);
+            }
+        }
+    }
+}
+
+int borrarDerecha(char caracter, char cadena[]){
+   int cont=0;
+    for (int i = 0; i < strlen(cadena); ++i) {
+        if (caracter==cadena[i]){
+            cont++;
+        }
+    }
+    return cont;
+}
+
+int borrarIzquierda(char caracter, char cadena[]){
+    int cont=0;
+    for (int i = 0; i < strlen(cadena); ++i) {
+        if (caracter==cadena[i]){
+            cont++;
+        }
+    }
+    return cont;
+}
