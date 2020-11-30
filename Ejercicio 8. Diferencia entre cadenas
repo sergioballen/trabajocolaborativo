@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <string.h>
+
+void diferenciaEntreCadenas(char cadena1[], char cadena2[]);
+int borrar(char caracter, char cadena[]);
+int main() {
+    fflush(stdin);
+
+    char cadena1[50];
+    char cadena2[50];
+
+    printf("Diferencia entre dos cadenas\nDigite la cadena principal");
+    gets(cadena1);
+
+    printf("Digite la cadena secundaria");
+    gets(cadena2);
+
+    diferenciaEntreCadenas(cadena1,cadena2);
+
+    return 0;
+}
+
+void diferenciaEntreCadenas(char cadena1[], char cadena2[]){
+
+    int tam1=strlen(cadena1);
+
+
+    strlwr(cadena1);
+    strlwr(cadena2);
+
+
+    for (int i = 0; i <tam1 ; ++i) {
+        if (borrar(cadena1[i],cadena2)!=0){
+            cadena1[i]="";
+        }
+    }
+    printf("La cadena resultante es:  %s",cadena1);
+}
+
+int borrar(char caracter, char cadena[]){
+    int cont=0;
+    for (int i = 0; i < strlen(cadena); ++i) {
+        if (caracter==cadena[i]){
+            cont++;
+        }
+    }
+    return cont;
+}
