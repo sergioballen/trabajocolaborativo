@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <string.h>
+
+char Interseccion(char cadena1[], char cadena2[]);
+int validar(char caracter, char cadena1[]);
+
+int main() {
+    fflush(stdin);
+
+    char cadena1[50];
+    char cadena2[50];
+
+    printf("Interseccion\nDigite la cadena 1");
+    gets(cadena1);
+
+    printf("Digite la cadena 2");
+    gets(cadena2);
+    Interseccion(cadena1,cadena2);
+
+
+    return 0;
+}
+
+char Interseccion(char cadena1[], char cadena2[]){
+
+    int tam1=strlen(cadena1);
+    int tam2=strlen(cadena2);
+
+    char aux1[50];
+    char aux2[50];
+    strcpy(aux1, cadena1);
+    strcpy(aux2,cadena2);
+
+    strlwr(aux1);
+    strlwr(aux2);
+
+    char resultados[50];
+    int cont=0;
+
+    for (int i = 0; i < tam1; ++i) {
+        for (int j = 0; j < tam2; ++j) {
+            if (aux1[i]==aux2[j]){
+                if (validar(aux1[i],resultados)!=1){
+                    resultados[cont]=aux2[j];
+                    cont++;
+                }
+            }
+        }
+    }
+    printf("Este es el resultado %s",resultados);
+
+}
+
+int validar(char caracter, char cadena1[]){
+    int cont=0;
+    int tam=strlen(cadena1);
+    for (int i = 0; i < tam; ++i) {
+        if (cadena1[i]==caracter){
+            cont++;
+        }
+    }
+    return cont;
+}
+
