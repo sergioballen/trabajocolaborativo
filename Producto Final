@@ -1,0 +1,508 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+
+#define N 80
+
+/// RUN CONVERTIR EN NOMBRE PROPIO EL CONTENIDO DE LA CADENA
+
+void ownName(){
+
+    char cadena[1000];
+    printf("Digite una cadena de texto: \n");
+    fgets(cadena, 1000, stdin);
+    char delimitador[] = " ";
+    int c = 0, position = 2;
+    char *token = strtok(cadena, delimitador);
+    if(token != NULL){
+        while(token != NULL){
+            if (strlen(token)!=1) {
+                int length = strlen(token) - 1;
+                char sub[1000];
+                while (c < length) {
+                    sub[c] = token[position + c - 1];
+                    c++;
+                }
+                sub[c] = '\0';
+                c = 0;
+                printf("%c%s ", toupper(token[0]), sub);
+            }else{
+                printf("%s ", token);
+            }
+            token = strtok(NULL, delimitador);
+        }
+    }
+}
+///END CONVERTIR EN NOMBRE PROPIO EL CONTENIDO DE LA CADENA
+//"""""""""""""""""""""""""""""""""""""""""""""""""""""""""//
+/// RUN CONTAR EL NUMERO DE VECES QUE EXISTE UNA PALABRA EN UNA CADENA
+void counter(){
+    char cadena[1000];
+    printf("Digite una cadena de texto: \n");
+    fgets(cadena, 1000, stdin);
+    strtok(cadena,"\n");
+    char buscar[100];
+    printf("Digite una palabra a buscar de la frase anterior: \n");
+    scanf("%s",buscar);
+    char delimitador[] = " ";
+    char *token = strtok(cadena, delimitador);
+    int c = 0;
+    int count = 0;
+    if(token != NULL){
+        while(token != NULL){
+            if (strcmp(token, buscar) == 0){
+                count++;
+            }
+            token = strtok(NULL, delimitador);
+        }
+    }
+    printf("La palabra %s esta %d veces en la frase ", buscar, count);
+
+    printf("\n<------------FIN VECES QUE EXISTE UNA PALABRA EN UNA CADENA-------------->\n");
+
+}
+
+/// END CONTAR EL NUMERO DE VECES QUE EXISTE UNA PALABRA EN UNA CADENA
+//"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""//
+/// RUN ENCRIPTAR Y DESENCRIPTAR
+
+void encriptarFrase();
+void desencriptarFrase();
+
+int largo;
+char frase[N];
+
+int encrypt ()
+{
+    printf("Ingrese la frase: ");
+    gets(frase);
+
+    largo = strlen(frase);
+
+    encriptarFrase();
+    printf("La frase encriptada es: %s",frase);
+
+    desencriptarFrase();
+    printf("\nLa frase desencriptada es: %s",frase);
+    return 0;
+}
+
+void encriptarFrase ()
+{
+    int i;
+
+    for(i=0 ; i<largo ; ++i)
+    {
+        //convierte las minusculas a mayusculas.
+        *(frase + i) = toupper(*(frase + i));
+
+        //descarta los digitos
+        if(isalpha(*(frase + i)))
+        {
+            //verifica los casos especiales X-Y-Z
+            if(*(frase + i) > 87)
+            {
+                *(frase+i) = *(frase+i) - 23;
+            }
+            else
+            {
+                *(frase + i) = *(frase + i) + 3;
+            }
+        }
+    }
+}
+
+void desencriptarFrase ()
+{
+    int i;
+
+    for(i=0 ; i<largo ; ++i)
+    {
+        if(isalpha(*(frase + i)))
+        {
+            if(*(frase + i) < 68)
+            {
+                *(frase+i)= *(frase+i) + 23;
+            }
+            else
+            {
+                *(frase+i)= *(frase+i) - 3;
+            }
+        }
+    }
+}
+
+///END ENCRIPTAR Y DESENCRIPTAR
+//""""""""""""""""""""""""""""""""""""""""""//
+///LLENAR CARACTERES POR IZQUIERDA O POR DERECHA
+char cadena[1000];
+int longitudDeseada;
+char relleno[1000];
+
+
+void llenarporIzquierda();
+void llenarporDerecha();
+
+int fillCharacters() {
+    printf("Ingrese la frase a rellenar \n");
+    fgets(cadena, 1000, stdin);
+
+    printf("Ingrese el relleno de la frase \n");
+    fgets(relleno, 1000, stdin);
+
+    printf("Ingrese la longitud final deseada \n");
+    scanf("%d", &longitudDeseada);
+
+    printf("Original: %s\n", cadena);
+    llenarporIzquierda();
+    llenarporDerecha();
+
+    return 0;
+}
+
+void llenarporDerecha(){
+
+    char cadenaRellena[longitudDeseada + 1];// Aquí almacenamos el resultado. Debe ser lo suficientemente larga
+// Obtener la diferencia de longitud
+    int diferencia = longitudDeseada - (int) strlen(cadena) + 1;
+    sprintf(cadenaRellena, "%*.*s%s ", diferencia, diferencia, cadena, relleno);
+    printf("Rellena por Derecha:\n %s", cadenaRellena);
+};
+
+void llenarporIzquierda(){
+
+    char cadenaRellena[longitudDeseada + 1];// Aquí almacenamos el resultado. Debe ser lo suficientemente larga
+// Obtener la diferencia de longitud
+    int diferencia = longitudDeseada - (int) strlen(cadena)+1;
+    sprintf(cadenaRellena, "%*.*s%s ", diferencia, diferencia, relleno, cadena);
+    printf("Rellena por Izquierda: %s", cadenaRellena);
+};
+
+///END LLENAR CARACTERES POR IZQUIERDA O POR IZQUIERDA
+//""""""""""""""""""""""""""""""""""""""""""""""""""""""//
+/// RUN BORRAR CARACTERES DE UNA CADENA
+void removerCaracteres(char *cadena, char *caracteres);
+char cadena[1000];
+char caracteres[1000];
+
+int removeCharacters() {
+    printf("Ingrese la frase a cambiar \n");
+    fgets(cadena, 1000, stdin);
+    printf("Ingrese el caracter a Eliminar \n");
+    fgets(caracteres, 1000, stdin);
+    printf("La frase es: '%s'\n", cadena);
+    printf("Y el caracter que se quita es: %s\n", caracteres);
+    removerCaracteres(cadena, caracteres);
+    printf("Despues de remover, la frase es: '%s'\n", cadena);
+    return 0;
+}
+
+void removerCaracteres(char *cadena, char *caracteres) {
+    int indiceCadena = 0, indiceCadenaLimpia = 0;
+    int deberiaAgregarCaracter = 1;
+    while (cadena[indiceCadena]) {
+        deberiaAgregarCaracter = 1;
+        int indiceCaracteres = 0;
+        while (caracteres[indiceCaracteres]) {
+            if (cadena[indiceCadena] == caracteres[indiceCaracteres]) {
+                deberiaAgregarCaracter = 0;
+            }
+            indiceCaracteres++;
+        }
+        if (deberiaAgregarCaracter) {
+            cadena[indiceCadenaLimpia] = cadena[indiceCadena];
+            indiceCadenaLimpia++;
+        }
+        indiceCadena++;
+    }
+    cadena[indiceCadenaLimpia] = 0;
+}
+
+
+///END BORRAR CARACTERES DE UNA CADENA
+//""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""//
+///RUN INTERSECCION
+char Interseccion(char cadena1[], char cadena2[]);
+int validar(char caracter, char cadena1[]);
+
+int intersection() {
+    fflush(stdin);
+
+    char cadena1[50];
+    char cadena2[50];
+
+    printf("Interseccion\nDigite la cadena 1");
+    gets(cadena1);
+
+    printf("Digite la cadena 2");
+    gets(cadena2);
+    Interseccion(cadena1,cadena2);
+
+
+    return 0;
+}
+
+char Interseccion(char cadena1[], char cadena2[]){
+
+    int tam1=strlen(cadena1);
+    int tam2=strlen(cadena2);
+
+    char aux1[50];
+    char aux2[50];
+    strcpy(aux1, cadena1);
+    strcpy(aux2,cadena2);
+
+    strlwr(aux1);
+    strlwr(aux2);
+
+    char resultados[50];
+    int cont=0;
+
+    for (int i = 0; i < tam1; ++i) {
+        for (int j = 0; j < tam2; ++j) {
+            if (aux1[i]==aux2[j]){
+                if (validar(aux1[i],resultados)!=1){
+                    resultados[cont]=aux2[j];
+                    cont++;
+                }
+            }
+        }
+    }
+    printf("Este es el resultado %s",resultados);
+
+}
+
+int validar(char caracter, char cadena1[]){
+    int cont=0;
+    int tam=strlen(cadena1);
+    for (int i = 0; i < tam; ++i) {
+        if (cadena1[i]==caracter){
+            cont++;
+        }
+    }
+    return cont;
+}
+/// END INTERSECCION
+//"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""//
+/// RUN DIFERENCIA ENTRE DOS CADENAS
+void diferenciaEntreCadenas(char cadena1[], char cadena2[]);
+int borrar(char caracter, char cadena[]);
+int difference() {
+    fflush(stdin);
+
+    char cadena1[50];
+    char cadena2[50];
+
+    printf("Diferencia entre dos cadenas\nDigite la cadena principal");
+    gets(cadena1);
+
+    printf("Digite la cadena secundaria");
+    gets(cadena2);
+
+    diferenciaEntreCadenas(cadena1,cadena2);
+
+    return 0;
+}
+
+void diferenciaEntreCadenas(char cadena1[], char cadena2[]){
+
+    int tam1=strlen(cadena1);
+
+
+    strlwr(cadena1);
+    strlwr(cadena2);
+
+    /* char aux[50];
+     strcpy(aux,cadena1);*/
+
+    for (int i = 0; i <tam1 ; ++i) {
+        if (borrar(cadena1[i],cadena2)!=0){
+            for (int j = i; j < 50; ++j) {
+                cadena1[j]=cadena1[j+1];
+            }
+            i--;
+        }
+
+    }
+    printf("La cadena resultante es:  %s",cadena1);
+}
+
+int borrar(char caracter, char cadena[]){
+    int cont=0;
+    for (int i = 0; i < strlen(cadena); ++i) {
+        if (caracter==cadena[i]){
+            cont++;
+        }
+    }
+    return cont;
+}
+
+/// END DIFERENECIA ENTRE DOS CADENAS
+//"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""//
+///RUN BORRAR CARACTERES IZQUIERDA O DERECHA
+void borrarIzquierdaODerecha(char cadena1[], char cadena2[], int opcion);
+int borrarDerecha(char caracter, char cadena[]);
+int borrarIzquierda(char caracter, char cadena[]);
+int deleteCharacters() {
+    fflush(stdin);
+
+    char cadena1[50];
+    char cadena2[50];
+    int opcion;
+
+    printf("Borrar caracteres de izquierda o derecha\n");
+    printf("Digite la cadena principal");
+    gets(cadena1);
+
+    printf("Digite la cadena secundaria");
+    gets(cadena2);
+
+    printf("\nBorrar por:\n1. Derecha\n2. Izquierda");
+    scanf("%d",&opcion);
+
+    borrarIzquierdaODerecha(cadena1, cadena2, opcion);
+
+    return 0;
+}
+
+void borrarIzquierdaODerecha(char cadena1[], char cadena2[], int opcion){
+
+    int tam1=strlen(cadena1);
+
+
+    strlwr(cadena1);
+    strlwr(cadena2);
+
+    if (opcion==1){
+        for (int i = tam1-1; i >=0 ; --i) {
+            if (borrarDerecha(cadena1[i],cadena2)!=0){
+                for (int j = i; j < 50; ++j) {
+                    cadena1[j]=cadena1[j+1];
+
+                }
+                i--;
+            } else{
+                printf("%s",cadena1);
+                break;
+            }
+        }
+    }else if (opcion==2){
+        for (int i = 0; i <tam1 ; ++i) {
+            if (borrarIzquierda(cadena1[i],cadena2)!=0){
+                for (int j = i; j < 50; ++j) {
+                    cadena1[j]=cadena1[j+1];
+
+                }
+                i--;
+            } else{
+                printf("%s",cadena1);
+                break;
+            }
+        }
+    }
+}
+
+int borrarDerecha(char caracter, char cadena[]){
+    int cont=0;
+    for (int i = 0; i < strlen(cadena); ++i) {
+        if (caracter==cadena[i]){
+            cont++;
+        }
+    }
+    return cont;
+}
+
+int borrarIzquierda(char caracter, char cadena[]){
+    int cont=0;
+    for (int i = 0; i < strlen(cadena); ++i) {
+        if (caracter==cadena[i]){
+            cont++;
+        }
+    }
+    return cont;
+}
+
+///END BORRAR CARACTERES IZQUIERDA O DERECHA
+//"""""""""""""""""""""""""""""""""""""""""""""""""//
+///RUN STOP
+void stop()
+{
+    printf("\nPulsa ENTER para continuar...");
+    getchar();
+    getchar();
+}
+/// END STOP
+//"""""""""""""""""""""""""""""""""""""""""""""""""""""//
+/// RUN MENU
+void mainMenu(){
+    int exit = 1;
+    char option[10];
+    char *mainMenu = "\n<-----MENU PRINCIPAL----->\n\nOpciones:\n"
+                     "1. Convertir en nombre propio\n"
+                     "2. Veces que existe una palabra en una cadena\n"
+                     "3. Encriptar y desencriptar cadena\n"
+                     "4. Llenar caracteres por izquierda o por derecha\n"
+                     "5. Borrar caracteres de una cadena\n"
+                     "6. Interseccion\n"
+                     "7. Diferencia Entre dos cadenas\n"
+                     "8. Borrar caracteres izquierda o derecha\n""""""""""""\n"
+                     "9. SALIR\n""""""""""""\n"
+                     "Digite la opcion: ";
+
+    do{
+        printf( mainMenu );
+        scanf("%s",&option);
+        fflush(stdin);
+
+        if (strcmp(option,"1")==0){
+            ownName();
+            stop();
+        } else if (strcmp(option,"2")==0){
+            counter();
+            stop();
+
+        } else if (strcmp(option,"3")==0){
+            encrypt();
+            stop();
+        }
+        else if (strcmp(option,"4")==0){
+            fillCharacters();
+            stop();
+        }
+        else if (strcmp(option,"5")==0){
+            removeCharacters();
+            stop();
+        }
+        else if (strcmp(option,"6")==0){
+            intersection();
+            stop();
+        }
+        else if (strcmp(option,"7")==0){
+            difference();
+            stop();
+        }
+        else if (strcmp(option,"8")==0){
+            deleteCharacters();
+            stop();
+        }
+        else if(strcmp(option,"9")==0){
+            exit = 0;
+        }
+
+        else{
+            printf("ERROR: DIGITE UNA OPCION QUE SE ENCUENTRE EN EL MENU");
+            stop();
+        }
+
+
+    }while( exit != 0 );
+}
+///END MENU
+//"""""""""""""""""""""""""""""""""""""""""""""""""""//
+///RUN MAIN
+int main() {
+    mainMenu();
+    return 0;
+}
+///END MAIN
